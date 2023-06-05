@@ -1,0 +1,150 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lookisimo</title>
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/main.css' %}" rel="stylesheet"/>
+        <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+
+
+    {% block style %}
+    {% endblock %}
+</head>
+
+<body class="bg-black">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black py-4 fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand px-4" href="{% url 'home' %}">Lookisimo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contactus' %}">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'review' %}">Review</a>
+                </li>
+            </ul>
+            <ul class="d-flex navbar-nav gap-4">
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown btn btn-light">
+                    <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{user}}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if user.user_type.name == "Super User" %}
+                                   <li><a class="dropdown-item" href="{% url 'admin-dashboard' %}">DashBoard</a></li>
+                                {% elif user.user_type.name == "Staff User" %}
+                                    <li><a class="dropdown-item" href="{% url 'main-profile' user.id %}">DashBoard</a></li>
+                                {% elif user.user_type.name == "Normal User" %}
+                                    <li><a class="dropdown-item" href="{% url 'main-profile' user.id %}">DashBoard</a></li>
+                        {% endif %}
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+
+
+                
+                <li class="nav-item btn btn-light">
+                    <a class="nav-link text-black" href="{% url 'login' %}">Sign In</a>
+                </li>
+                {% endif %}
+                <li class="nav-item btn btn-primary">
+                    <a class="nav-link text-white" href="{% url 'create-new' %}">Book Now</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    {% block body %}
+    {% endblock %}
+    <div class="vw-100 text-center bg-black text-white" style="padding-top: 8rem; padding-bottom: 4rem">
+        <h2 class="display-5 fw-bold">Contact Info</h2>
+        <div class="container" style="padding-left: 100px; padding-right: 100px;">
+            <div class="row g-4">
+                <div class="col-md-6  text-md-start text-center d-flex flex-column">
+                    <address>
+                        <h3 class="fs-2 text-uppercase">Location</h3>
+                        <p class="fs-5">
+                            Lookismo Salon, Krishna Galli, Lalitpur
+                        </p>
+                    </address>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3533.2108691933354!2d85.31716045060598!3d27.679876782718964!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb191432cc44f9%3A0xe1748f73edfe5a39!2sLookisimo!5e0!3m2!1sen!2snp!4v1649582739097!5m2!1sen!2snp"
+                    width="auto" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="col-md-6  text-md-end text-center d-flex flex-column gap-4">
+                    <h3 class="fs-2 text-uppercase">
+                        Business Hours
+                    </h3>
+                    <p class="fs-5 d-flex flex-column gap-3">
+                        <span class="pb-4 fs-4"><b>Opening Hours:</b></span>
+                        <span><b>Sunday-Friday:</b> 10:00 AM - 07:00 PM<br /></span>
+                        <span><b>Saturday:</b> Closed<br /></span>
+                    </p>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-12 fs-5">
+                    &copy; Lookismo Salon | All rights reserved
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="{% static 'js/footer.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}" defer></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+{% comment %} <script>
+        var config = {
+            "publicKey": "test_public_key_3ccd85ac24764f9081d6b8c546724d58",
+            "productIdentity": "1234567890",
+            "productName": "Dragon",
+            "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+            "paymentPreference": [
+                "KHALTI",
+                "EBANKING",
+                "MOBILE_BANKING",
+                "CONNECT_IPS",
+                "SCT",
+                ],
+            "eventHandler": {
+                onSuccess (payload) {
+                  
+                    console.log(payload);
+                    location.href="{% url 'payment-complete'  %}"; 
+
+                },
+                onError (error) {
+                    console.log(error);
+                },
+                onClose () {
+                    console.log('widget is closing');
+                }
+            }
+        };
+
+        var checkout = new KhaltiCheckout(config);
+        var btn = document.getElementById("payment-button");
+        btn.onclick = function () {
+            checkout.show({amount: {{total}} * 100});
+        }
+    </script> {% endcomment %}
+
+</body>
+</html>

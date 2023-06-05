@@ -1,0 +1,48 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block style %}
+  #bg{
+          background-size: cover;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+}
+{% endblock %}
+
+
+{% block body %}
+<div
+      class="vw-100 text-center bg-white text-black"
+      style="padding-top: 8rem; padding-bottom: 10rem"
+    >
+      <div class="container">
+        <div class="row justify-content-center">
+          <h2 class="display-4 col-12 fw-bold">
+            Experienced and Professional Team
+          </h2>
+          <p class="col-md-8 fs-4">
+            “The strength of the team is each individual member. The strength of each member is the team.”
+          </p>
+        </div>
+      </div>
+      <div class="container mt-5">
+        <div class="row g-4">
+          {% for staff in staff %}
+          <div class="col-md-4">
+            <div class="card">
+              <img src={{staff.profile.url}} height=400px; class="card-img-top" id="card-image"/>
+              <div class="card-body">
+                <h5 class="card-title" id="card-title">{{staff.first_name}} {{staff.last_name}}</h5>
+                <h6 class="card-subtitle mb-2" id="card-subtitle">{{staff.position}}</h6>
+                <p class="card-text">
+                  {{staff.description}}
+                </p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+{% endblock %}
